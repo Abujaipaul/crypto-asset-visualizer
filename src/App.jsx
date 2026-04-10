@@ -13,28 +13,26 @@ function App() {
         try {
   const response = await fetch('https://api.coingecko.com/api/v3/coins/bitcoin/market_chart?vs_currency=usd&days=30')
   const data = await response.json()
+  console.log(data)
 
-  // 1. We dive into data.prices and use .map() to loop through the array of arrays
   const cleanChartData = data.prices.map((item) => {
-    
-    // item[0] is the ugly timestamp, item[1] is the price
-    const timestamp = item[0];
+ 
+    const timeStamp = item[0];
     const coinPrice = item[1].toFixed(0);
 
-    // 2. We format the timestamp into a beautiful string (e.g., "Oct 1")
-    const formattedDate = new Date(timestamp).toLocaleDateString("en-US", { 
+    const formattedDate = new Date(timeStamp).toLocaleDateString("en-US", { 
       month: "short", 
       day: "numeric" 
     });
+    //  console.log(formattedDate, coinPrice)
 
-    // 3. We return a clean OBJECT for Recharts to read
     return {
       date: formattedDate,
       price: coinPrice
     };
   });
-
-  // 4. We save our brand new, clean array into the state!
+   
+  console.log(typeof cleanChartData)
   setChartData(cleanChartData);
   setIsLoading(false);
 
@@ -52,31 +50,30 @@ function App() {
 
   return (
     <>
-    <div style={{ maxWidth: '800px', margin: '0 auto', padding: '20px' }}>
+
+    {/* <pre>{JSON.stringify(chartData, null, 2)}</pre>
+       */}
+    <div className="chart-card" >
       <h2>Bitcoin 30-Day Trend</h2>
       
-      {/* The Container gives the chart a fixed height to live inside */}
+     
       <div style={{ width: '100%', height: '400px', marginTop: '20px' }}>
         
         <ResponsiveContainer width="100%" height="100%">
           <AreaChart data={chartData}>
             
-            {/* The X-Axis maps to our formatted dates (e.g., "Oct 1") */}
+            
             <XAxis dataKey="date" />
-            
-            {/* The Y-Axis. The domain makes sure the chart doesn't start at $0, 
-                so we can actually see the price bumps! */}
+      
             <YAxis domain={['dataMin', 'dataMax']} />
-            
-            {/* The Tooltip gives us that interactive hover effect */}
+    
             <Tooltip />
-            
-            {/* The actual line/area being drawn, mapped to our price */}
+     
             <Area 
               type="monotone" 
               dataKey="price" 
-              stroke="#2563eb" 
-              fill="#3b82f6" 
+              stroke="#10b981"
+              fill="#10b981"
               fillOpacity={0.3} 
             />
             
@@ -85,7 +82,7 @@ function App() {
 
       </div>
     </div>
-  )
+  
     </>
   )
 }
