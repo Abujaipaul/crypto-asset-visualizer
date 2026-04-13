@@ -16,3 +16,18 @@ A professional-grade, dark-mode financial dashboard built with React and Rechart
 * **Styling:** Pure Vanilla CSS (CSS Flexbox/Grid)
 * **Data Source:** CoinGecko API (v3)
 
+##  Getting Started
+
+To view and run this dashboard locally on your machine:
+
+1. Clone the repository:
+`git clone https://github.com/Abujaipaul/crypto-asset-visualizer.git`
+
+2. Navigate into the project directory:
+`cd crypto-asset-visualizer`
+
+3. Install the required dependencies:
+`npm install`
+
+4. Spin up the Vite development server:
+`npm run dev`
